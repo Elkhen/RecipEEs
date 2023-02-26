@@ -242,7 +242,7 @@
 
   <profiles>
     <profile>
-      <id>arq-remote</id>
+      <id>arq-managed</id>
       <dependencies>
         <dependency>
           <groupId>org.wildfly.arquillian</groupId>
@@ -266,7 +266,7 @@
             </executions>
             <configuration>
               <systemPropertyVariables>
-                <arquillian.launch>remote</arquillian.launch>
+                <arquillian.launch>managed</arquillian.launch>
               </systemPropertyVariables>
             </configuration>
           </plugin>

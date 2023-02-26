@@ -4,11 +4,14 @@
             xsi:schemaLocation="http://jboss.org/schema/arquillian
     http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
-    <container qualifier="jboss" default="true">
+    <defaultProtocol type="Servlet 5.0" />
+
+    <container qualifier="managed" default="true">
         <configuration>
             <property name="jbossHome">D:\JavaEE\wildfly-27.0.1.Final</property>
         </configuration>
     </container>
+
     <engine>
         <property name="deploymentExportPath">target/deployments</property>
     </engine>
