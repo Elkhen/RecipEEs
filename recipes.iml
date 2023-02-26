@@ -175,7 +175,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-base:2.13.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-json-provider:2.13.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations:2.13.4" level="project" />
-    <orderEntry type="library" name="Maven: ch.qos.reload4j:reload4j:1.2.22" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.reload4j:reload4j:1.2.24" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:2.0.6" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-reload4j:2.0.6" level="project" />
   </component>

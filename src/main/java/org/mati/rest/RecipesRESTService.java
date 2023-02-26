@@ -6,12 +6,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.apache.log4j.Logger;
 import org.mati.data.RecipeRepository;
 import org.mati.model.Recipe;
-import org.slf4j.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Path("/recipe")
