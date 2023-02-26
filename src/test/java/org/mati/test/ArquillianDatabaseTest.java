@@ -59,5 +59,4 @@ public class ArquillianDatabaseTest {
         logger.info("Retrieved recipe equal to persisted one.");
     }
 
-
 }

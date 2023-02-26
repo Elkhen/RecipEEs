@@ -10,8 +10,8 @@
         <connection-url>jdbc:postgresql://localhost:5432/recipes_database</connection-url>
         <driver>postgresql</driver>
         <security>
-            <user-name>recipes_user</user-name>
-            <password>recipes_password</password>
+            <user-name>dude</user-name>
+            <password>dude</password>
         </security>
     </datasource>
 </datasources>
