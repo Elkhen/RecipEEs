@@ -1,4 +1,4 @@
-package org.mati;
+package org.mati.test;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mati.model.Recipe;
+
 
 
 public class RecipeRestClientTest

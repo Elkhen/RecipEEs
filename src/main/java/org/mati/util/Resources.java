@@ -8,9 +8,14 @@ import org.apache.log4j.Logger;
 
 public class Resources {
 
-    @Produces
     @PersistenceContext
     private EntityManager em;
+
+
+    @Produces
+    public EntityManager getEntityManager() {
+        return em;
+    }
 
     @Produces
     public Logger produceLogger(InjectionPoint injectionPoint) {

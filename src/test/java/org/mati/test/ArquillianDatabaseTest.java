@@ -1,13 +1,12 @@
-package org.mati;
+package org.mati.test;
 
 import jakarta.inject.Inject;
-import jakarta.persistence.PersistenceContext;
+
 import org.apache.log4j.Logger;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,14 +22,17 @@ public class ArquillianDatabaseTest {
     @Deployment
     public static Archive<?> createTestArchive() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
-                .addClasses(Resources.class, Recipe.class, RecipeRepository.class)
+                .addClasses(Recipe.class, RecipeRepository.class, Resources.class)
+                .addPackages(true, "org.apache.log4j")
                 .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
+                .addAsResource("log4j.properties")
                 .addAsWebInfResource("test-beans.xml", "beans.xml")
                 .addAsWebInfResource("test-ds.xml");
     }
 
     @Inject
     RecipeRepository recipeRepository;
+
     @Inject
     Logger logger;
 

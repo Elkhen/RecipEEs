@@ -10,4 +10,8 @@
             <property name="jbossHome">D:\JavaEE\wildfly-27.0.1.Final</property>
         </configuration>
     </container>
+    <engine>
+        <property name="deploymentExportPath">target/deployments</property>
+    </engine>
+
 </arquillian>

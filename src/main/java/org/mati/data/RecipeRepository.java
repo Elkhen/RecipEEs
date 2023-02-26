@@ -4,6 +4,7 @@ package org.mati.data;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.mati.model.Recipe;
 
 @Stateless
