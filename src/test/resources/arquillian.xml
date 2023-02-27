@@ -6,17 +6,7 @@
 
     <defaultProtocol type="Servlet 5.0" />
 
-    <container qualifier="managed" default="true">
-        <configuration>
-            <property name="jbossHome">D:\JavaEE\wildfly-27.0.1.Final</property>
-        </configuration>
-    </container>
-
-    <engine>
-        <property name="deploymentExportPath">target/deployments</property>
-    </engine>
-
-    <container qualifier="remote">
+    <container qualifier="remote" default="true">
         <!-- Arquillian will deploy to this WildFly server. -->
         <configuration>
             <property name="managementAddress">127.0.0.1</property>
@@ -26,5 +16,17 @@
             <property name="password">admin</property> -->
         </configuration>
     </container>
+
+    <container qualifier="managed" >
+        <configuration>
+            <property name="jbossHome">D:\JavaEE\wildfly-27.0.1.Final</property>
+        </configuration>
+    </container>
+
+    <engine>
+        <property name="deploymentExportPath">target/deployments</property>
+    </engine>
+
+
 
 </arquillian>

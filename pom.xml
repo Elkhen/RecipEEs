@@ -164,7 +164,7 @@
 
     <dependency>
       <groupId>org.wildfly.arquillian</groupId>
-      <artifactId>wildfly-arquillian-container-managed</artifactId>
+      <artifactId>wildfly-arquillian-container-remote</artifactId>
       <scope>test</scope>
     </dependency>
 

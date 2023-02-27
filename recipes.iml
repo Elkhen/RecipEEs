@@ -80,6 +80,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.jboss.arquillian.junit:arquillian-junit-core:1.7.0.Alpha12" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jboss.arquillian.test:arquillian-test-api:1.7.0.Alpha12" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jboss.arquillian.test:arquillian-test-spi:1.7.0.Alpha12" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.jboss.arquillian.core:arquillian-core-spi:1.7.0.Alpha12" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jboss.arquillian.container:arquillian-container-test-api:1.7.0.Alpha12" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jboss.shrinkwrap:shrinkwrap-api:1.2.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jboss.shrinkwrap.descriptors:shrinkwrap-descriptors-api-base:2.0.0" level="project" />
@@ -174,11 +175,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-base:2.13.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-json-provider:2.13.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations:2.13.4" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.jboss.arquillian.extension:arquillian-rest-client-api:1.0.0.Final-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.jboss.arquillian.extension:arquillian-rest-client-impl-3x:1.0.0.Final-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.jboss.arquillian.extension:arquillian-rest-client-impl-base:1.0.0.Final-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: javassist:javassist:3.12.1.GA" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.jboss.arquillian.core:arquillian-core-spi:1.7.0.Alpha12" level="project" />
     <orderEntry type="library" name="Maven: ch.qos.reload4j:reload4j:1.2.24" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:2.0.6" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-reload4j:2.0.6" level="project" />

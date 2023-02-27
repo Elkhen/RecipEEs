@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mati.model.Recipe;
 
+import java.util.Map;
 
 
 public class RecipeRestClientTest
@@ -40,7 +41,7 @@ public class RecipeRestClientTest
         logger.info("Testing the GET method at endpoint.");
 
         Recipe fetchedRecipe = ClientBuilder.newClient()
-                .target(REST_TARGET_URL).path("/{id}").resolveTemplate("id", 1)
+                .target(REST_TARGET_URL).path("/{id}").resolveTemplate("id", response.readEntity(Map.class).get("id"))
                 .request().get(Recipe.class);
 
         assertEquals(recipe.getName(), fetchedRecipe.getName());
