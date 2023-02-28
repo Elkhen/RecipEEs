@@ -10,7 +10,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mati.data.RecipeRepository;
+import org.mati.data.RecipesRepository;
 import org.mati.model.Recipe;
 import org.mati.util.Resources;
 
@@ -22,7 +22,7 @@ public class ArquillianDatabaseTest {
     @Deployment
     public static Archive<?> createTestArchive() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
-                .addClasses(Recipe.class, RecipeRepository.class, Resources.class)
+                .addClasses(Recipe.class, RecipesRepository.class, Resources.class)
                 .addPackages(true, "org.apache.log4j")
                 .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
                 .addAsResource("log4j.properties")
@@ -31,7 +31,7 @@ public class ArquillianDatabaseTest {
     }
 
     @Inject
-    RecipeRepository recipeRepository;
+    RecipesRepository recipesRepository;
 
     @Inject
     Logger logger;
@@ -46,12 +46,12 @@ public class ArquillianDatabaseTest {
                 "Mix and let the mint leaves seep for 3-5 minutes",
                 "Add honey and mix again"});
 
-        recipeRepository.saveRecipe(recipe);
+        recipesRepository.saveRecipe(recipe);
         assertNotNull(recipe.getId());
         logger.info("Recipe for " + recipe.getName() + " persisted with id " + recipe.getId());
 
 
-        Recipe fetchedRecipe = recipeRepository.getRecipeById(recipe.getId());
+        Recipe fetchedRecipe = recipesRepository.getRecipeById(recipe.getId());
         assertEquals(recipe.getName(), fetchedRecipe.getName());
         assertEquals(recipe.getDescription(), fetchedRecipe.getDescription());
         assertArrayEquals(recipe.getIngredients(), fetchedRecipe.getIngredients());

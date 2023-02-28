@@ -7,27 +7,27 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.apache.log4j.Logger;
-import org.mati.data.RecipeRepository;
+import org.mati.data.RecipesRepository;
 import org.mati.model.Recipe;
 import java.util.Map;
 
 @Path("/recipe")
 @RequestScoped
-public class RecipesRESTService {
+public class RecipesController {
 
     @Inject
     private EntityManager em;
     @Inject
     private Logger logger;
     @Inject
-    private RecipeRepository recipeRepository;
+    private RecipesRepository recipesRepository;
 
     @POST
     @Path("/new")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createRecipe(Recipe recipe) {
-        recipeRepository.saveRecipe(recipe);
+        recipesRepository.saveRecipe(recipe);
         logger.info("Persisted " + recipe.getName() + " recipe");
         return Response.ok(Map.of("id", recipe.getId())).build();
     }
@@ -36,7 +36,7 @@ public class RecipesRESTService {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getById(@PathParam("id") int id) {
-        Recipe recipe = recipeRepository.getRecipeById(id);
+        Recipe recipe = recipesRepository.getRecipeById(id);
         return Response.ok(recipe).build();
     }
 

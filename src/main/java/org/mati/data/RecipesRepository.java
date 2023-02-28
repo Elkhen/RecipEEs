@@ -7,7 +7,7 @@ import jakarta.persistence.EntityManager;
 import org.mati.model.Recipe;
 
 @Stateless
-public class RecipeRepository {
+public class RecipesRepository {
 
     @Inject
     private EntityManager em;
