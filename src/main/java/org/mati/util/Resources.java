@@ -4,6 +4,8 @@ import jakarta.enterprise.inject.Produces;
 import jakarta.enterprise.inject.spi.InjectionPoint;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import org.apache.log4j.Logger;
 
 public class Resources {
@@ -20,6 +22,11 @@ public class Resources {
     @Produces
     public Logger produceLogger(InjectionPoint injectionPoint) {
         return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
+    }
+
+    @Produces
+    public Validator produceValidator() {
+        return Validation.buildDefaultValidatorFactory().getValidator();
     }
 
 }
