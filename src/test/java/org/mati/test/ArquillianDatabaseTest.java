@@ -46,7 +46,7 @@ public class ArquillianDatabaseTest {
                 "Mix and let the mint leaves seep for 3-5 minutes",
                 "Add honey and mix again"});
 
-        recipesRepository.saveRecipe(recipe);
+        recipesRepository.addRecipe(recipe);
         assertNotNull(recipe.getId());
         logger.info("Recipe for " + recipe.getName() + " persisted with id " + recipe.getId());
 
