@@ -21,7 +21,7 @@ public class RecipeRestClientTest
     private static final String REST_TARGET_URL = "http://localhost:8080/recipes/api/recipe";
 
     @Test
-    public void postAndGetTest() {
+    public void crudTest() {
         logger.info("Testing the POST method at endpoint.");
 
         Recipe recipe = new Recipe();
@@ -38,6 +38,7 @@ public class RecipeRestClientTest
         Assert.assertEquals(response.getStatus(), 200);
 
         logger.info("Posting successful with status 200.");
+
         logger.info("Testing the GET method at endpoint.");
 
         Recipe fetchedRecipe = ClientBuilder.newClient()
@@ -50,5 +51,8 @@ public class RecipeRestClientTest
         assertArrayEquals(recipe.getDirections(), fetchedRecipe.getDirections());
 
         logger.info("Returned object with fields equal to the posted object.");
+
+        logger.info("Testing the DELETE method at endpoint.");
+
     }
 }
