@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDateTime;
+
 @Data
 @Entity
 public class Recipe {
@@ -21,6 +23,12 @@ public class Recipe {
 
     @NotBlank
     private String name;
+
+    @NotBlank
+    private String category;
+
+    @EqualsAndHashCode.Exclude
+    private String date = LocalDateTime.now().toString();
 
     @NotBlank
     private String description;

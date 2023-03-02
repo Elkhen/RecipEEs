@@ -24,6 +24,7 @@ public class RecipeRestClientTest
     public void crudTests() {
         Recipe recipe = new Recipe();
         recipe.setName("Warming Ginger Tea");
+        recipe.setCategory("beverage");
         recipe.setDescription("Ginger tea is a warming drink for cool weather, ...");
         recipe.setIngredients(new String[]{"1 inch ginger root, minced", "1/2 lemon, juiced", "1/2 teaspoon manuka honey"});
         recipe.setDirections(new String[]{"Boil water", "Pour boiling hot water into a mug", "Add fresh mint leaves",
@@ -32,6 +33,7 @@ public class RecipeRestClientTest
 
         Recipe incorrectRecipe = new Recipe();
         incorrectRecipe.setName(null);
+        recipe.setCategory("beverage");
         incorrectRecipe.setDescription("Ginger tea is a warming drink for cool weather, ...");
         incorrectRecipe.setIngredients(new String[]{"1 inch ginger root, minced", "1/2 lemon, juiced", "1/2 teaspoon manuka honey"});
         incorrectRecipe.setDirections(new String[]{"Boil water", "Pour boiling hot water into a mug", "Add fresh mint leaves",
