@@ -46,16 +46,19 @@ public class ArquillianDatabaseTest {
                 "Mix and let the mint leaves seep for 3-5 minutes",
                 "Add honey and mix again"});
 
+
+
         recipesRepository.addRecipe(recipe);
+
         assertNotNull(recipe.getId());
+
         logger.info("Recipe for " + recipe.getName() + " persisted with id " + recipe.getId());
 
 
         Recipe fetchedRecipe = recipesRepository.getRecipeById(recipe.getId());
-        assertEquals(recipe.getName(), fetchedRecipe.getName());
-        assertEquals(recipe.getDescription(), fetchedRecipe.getDescription());
-        assertArrayEquals(recipe.getIngredients(), fetchedRecipe.getIngredients());
-        assertArrayEquals(recipe.getDirections(), fetchedRecipe.getDirections());
+
+        assertEquals(recipe, fetchedRecipe);
+
         logger.info("Retrieved recipe equal to persisted one.");
     }
 

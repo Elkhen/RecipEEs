@@ -21,9 +21,7 @@ public class RecipeRestClientTest
     private static final String REST_TARGET_URL = "http://localhost:8080/recipes/api/recipe";
 
     @Test
-    public void crudTest() {
-        logger.info("Testing the POST method at endpoint.");
-
+    public void crudTests() {
         Recipe recipe = new Recipe();
         recipe.setName("Warming Ginger Tea");
         recipe.setDescription("Ginger tea is a warming drink for cool weather, ...");
@@ -32,27 +30,59 @@ public class RecipeRestClientTest
                 "Mix and let the mint leaves seep for 3-5 minutes",
                 "Add honey and mix again"});
 
-        Response response = ClientBuilder.newClient()
+        Recipe incorrectRecipe = new Recipe();
+        incorrectRecipe.setName(null);
+        incorrectRecipe.setDescription("Ginger tea is a warming drink for cool weather, ...");
+        incorrectRecipe.setIngredients(new String[]{"1 inch ginger root, minced", "1/2 lemon, juiced", "1/2 teaspoon manuka honey"});
+        incorrectRecipe.setDirections(new String[]{"Boil water", "Pour boiling hot water into a mug", "Add fresh mint leaves",
+                "Mix and let the mint leaves seep for 3-5 minutes",
+                "Add honey and mix again"});
+
+
+        logger.info("POSTing the correct recipe.");
+
+        Response correctResponse = ClientBuilder.newClient()
                 .target(REST_TARGET_URL).path("/new")
                 .request().post(Entity.entity(recipe, MediaType.APPLICATION_JSON));
-        Assert.assertEquals(response.getStatus(), 200);
 
-        logger.info("Posting successful with status 200.");
+        Assert.assertEquals(200, correctResponse.getStatus());
 
-        logger.info("Testing the GET method at endpoint.");
+
+        logger.info("POSTing the incorrect recipe.");
+
+        Response incorrectResponse = ClientBuilder.newClient()
+                .target(REST_TARGET_URL).path("/new")
+                .request().post(Entity.entity(incorrectRecipe, MediaType.APPLICATION_JSON));
+
+        Assert.assertEquals(400, incorrectResponse.getStatus());
+
+        int idOfPostedRecipe = (int) correctResponse.readEntity(Map.class).get("id");
+
+        logger.info("GETting the recipe");
 
         Recipe fetchedRecipe = ClientBuilder.newClient()
-                .target(REST_TARGET_URL).path("/{id}").resolveTemplate("id", response.readEntity(Map.class).get("id"))
+                .target(REST_TARGET_URL).path("/{id}").resolveTemplate("id", idOfPostedRecipe)
                 .request().get(Recipe.class);
 
-        assertEquals(recipe.getName(), fetchedRecipe.getName());
-        assertEquals(recipe.getDescription(), fetchedRecipe.getDescription());
-        assertArrayEquals(recipe.getIngredients(), fetchedRecipe.getIngredients());
-        assertArrayEquals(recipe.getDirections(), fetchedRecipe.getDirections());
+        assertEquals(recipe, fetchedRecipe);
 
-        logger.info("Returned object with fields equal to the posted object.");
 
-        logger.info("Testing the DELETE method at endpoint.");
+        logger.info("DELETing existing recipe.");
+
+        Response deleteResponse = ClientBuilder.newClient()
+                .target(REST_TARGET_URL).path("/{id}").resolveTemplate("id", idOfPostedRecipe)
+                .request().delete();
+
+        assertEquals(204, deleteResponse.getStatus());
+
+
+        logger.info("Trying to DELETE a recipe that does not exist");
+
+        deleteResponse = ClientBuilder.newClient()
+                .target(REST_TARGET_URL).path("/{id}").resolveTemplate("id", idOfPostedRecipe)
+                .request().delete();
+
+        assertEquals(404, deleteResponse.getStatus());
 
     }
 }
