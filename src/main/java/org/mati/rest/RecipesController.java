@@ -4,15 +4,12 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.validation.Valid;
-import jakarta.validation.Validator;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import org.mati.data.RecipesRepository;
 import org.mati.model.Recipe;
-
-import java.util.Map;
 
 @Path("/recipe")
 @RequestScoped
@@ -24,40 +21,31 @@ public class RecipesController {
     private Logger logger;
     @Inject
     private RecipesRepository recipesRepository;
-    @Inject
-    private Validator validator;
 
     @POST
     @Path("/new")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addRecipe(@Valid Recipe recipe) {
-        recipesRepository.addRecipe(recipe);
-        return Response.ok(Map.of("id", recipe.getId())).build();
+        return recipesRepository.addRecipe(recipe);
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRecipeById(@PathParam("id") int id) {
-        Recipe recipe = recipesRepository.getRecipeById(id);
-        return Response.ok(recipe).build();
+        return recipesRepository.getRecipeById(id);
     }
 
     @DELETE
     @Path("/{id}")
     public Response deleteRecipe(@PathParam("id") int id) {
-        try {
-            recipesRepository.deleteRecipe(id);
-        } catch (IllegalArgumentException e) {
-            return Response.status(404).build();
-        }
-        return Response.status(204).build();
+        return recipesRepository.deleteRecipe(id);
     }
 
     @PUT
     @Path("/{id}")
-    public Response updateRecipe(@PathParam("id") int id, @Valid Recipe recipe) {
-        return Response.ok().build();
+    public Response updateRecipe(@Valid Recipe recipe, @PathParam("id") int id) {
+        return recipesRepository.updateRecipe(recipe, id);
     }
 }

@@ -2,6 +2,8 @@ package org.mati.test;
 
 import jakarta.inject.Inject;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -36,6 +38,9 @@ public class ArquillianDatabaseTest {
     @Inject
     Logger logger;
 
+    @PersistenceContext
+    EntityManager em;
+
     @Test
     public void testSaveAndFind() {
         Recipe recipe = new Recipe();
@@ -49,14 +54,14 @@ public class ArquillianDatabaseTest {
 
 
 
-        recipesRepository.addRecipe(recipe);
+        em.persist(recipe);
 
         assertNotNull(recipe.getId());
 
         logger.info("Recipe for " + recipe.getName() + " persisted with id " + recipe.getId());
 
 
-        Recipe fetchedRecipe = recipesRepository.getRecipeById(recipe.getId());
+        Recipe fetchedRecipe = recipesRepository.findRecipeById(recipe.getId());
 
         assertEquals(recipe, fetchedRecipe);
 
