@@ -68,6 +68,22 @@ public class RecipeRestClientTest
 
         assertEquals(recipe, fetchedRecipe);
 
+        logger.info("PUTting the recipe for update");
+
+        recipe.setName("NotSoWarming Ginger Tea");
+
+        Response updateResponse = ClientBuilder.newClient()
+                        .target(REST_TARGET_URL).path("/{id}").resolveTemplate("id", idOfPostedRecipe)
+                        .request().put(Entity.entity(recipe, MediaType.APPLICATION_JSON));
+
+        assertEquals(204, updateResponse.getStatus());
+
+        Recipe fetchedRecipeAfterUpdate = ClientBuilder.newClient()
+                .target(REST_TARGET_URL).path("/{id}").resolveTemplate("id", idOfPostedRecipe)
+                .request().get(Recipe.class);
+
+        assertEquals(recipe, fetchedRecipeAfterUpdate);
+
 
         logger.info("DELETing existing recipe.");
 
