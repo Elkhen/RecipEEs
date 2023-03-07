@@ -54,7 +54,7 @@ public class ArquillianDatabaseTest {
 
 
 
-        em.persist(recipe);
+        recipesRepository.addRecipe(recipe);
 
         assertNotNull(recipe.getId());
 

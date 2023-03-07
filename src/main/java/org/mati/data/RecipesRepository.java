@@ -27,7 +27,7 @@ public class RecipesRepository {
     }
 
     public Response getRecipeById(long id) {
-        return processRecipe(Action.GET, null, id, 404, 204);
+        return processRecipe(Action.GET, null, id, 404, 200);
     }
 
     public Response deleteRecipe(long id) {
@@ -46,7 +46,7 @@ public class RecipesRepository {
         return recipe;
     }
 
-    public Response processRecipe(Action action, Recipe updatedRecipe, long id, int errorStatus, int successStatus) {
+    public Response processRecipe(Action action, Recipe receivedRecipe, long id, int errorStatus, int successStatus) {
         try {
             Recipe persistedRecipe = findRecipeById(id);
             switch (action) {
@@ -56,7 +56,8 @@ public class RecipesRepository {
                     em.remove(persistedRecipe);
                     break;
                 case UPDATE:
-                    em.merge(updatedRecipe);
+                    receivedRecipe.setId(id);
+                    em.merge(receivedRecipe);
             }
         } catch (IllegalArgumentException exception) {
             return Response.status(errorStatus).build();
