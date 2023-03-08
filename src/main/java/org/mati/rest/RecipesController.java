@@ -45,7 +45,19 @@ public class RecipesController {
 
     @PUT
     @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response updateRecipe(@Valid Recipe recipe, @PathParam("id") int id) {
         return recipesRepository.updateRecipe(recipe, id);
+    }
+
+    @GET
+    @Path("/search")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchRecipes(@QueryParam("name") String name, @QueryParam("category") String category) {
+        if ((name == null) == (category == null)) {
+            return Response.status(400).build();
+        } else {
+            return recipesRepository.search(name, category);
+        }
     }
 }

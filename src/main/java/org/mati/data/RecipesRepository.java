@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import org.mati.model.Recipe;
 
+import java.util.List;
 import java.util.Map;
 
 @ApplicationScoped
@@ -63,5 +64,21 @@ public class RecipesRepository {
             return Response.status(errorStatus).build();
         }
         return Response.status(successStatus).build();
+    }
+
+    public Response search(String name, String category) {
+        List<Recipe> recipes;
+        if (name != null) {
+            recipes = em.createQuery(
+                            "SELECT r from Recipe r where lower(name) like :name order by date desc", Recipe.class)
+                    .setParameter("name", "%" + name.toLowerCase() + "%")
+                    .getResultList();
+        } else {
+            recipes = em.createQuery(
+                            "SELECT r from Recipe r where lower(category) = :category order by date desc", Recipe.class)
+                    .setParameter("category", category.toLowerCase())
+                    .getResultList();
+        }
+        return Response.ok(recipes).build();
     }
 }
