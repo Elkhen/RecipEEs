@@ -5,13 +5,16 @@ import static org.junit.Assert.assertEquals;
 
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.mati.model.Recipe;
 
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.List;
 
 
 public class RecipeRestClientTest
@@ -106,28 +109,64 @@ public class RecipeRestClientTest
 
     }
 
+    @Test
+    public void searchTest() {
+        for (Recipe recipe: RECIPES) {
+            addTest(recipe);
+        }
+
+        logger.info("Searching the recipes.");
+        List<Recipe> shouldBeMint = searchTest("name", "Mint");
+        assertEquals(RECIPES[0], shouldBeMint.get(0));
+    }
+
     public Response addTest(Recipe recipe) {
-        return ClientBuilder.newClient()
-                .target(REST_TARGET_URL).path("/new")
-                .request().post(Entity.entity(recipe, MediaType.APPLICATION_JSON));
+        return ClientBuilder
+                .newClient()
+                .target(REST_TARGET_URL)
+                .path("/new")
+                .request()
+                .post(Entity.entity(recipe, MediaType.APPLICATION_JSON));
 
     }
 
     public Recipe getTest(long id) {
-        return ClientBuilder.newClient()
-                .target(REST_TARGET_URL).path("/{id}").resolveTemplate("id", id)
-                .request().get(Recipe.class);
+        return ClientBuilder
+                .newClient()
+                .target(REST_TARGET_URL)
+                .path("/{id}")
+                .resolveTemplate("id", id)
+                .request()
+                .get(Recipe.class);
     }
 
     public Response updateTest(Recipe recipe, long id) {
-        return ClientBuilder.newClient()
-                .target(REST_TARGET_URL).path("/{id}").resolveTemplate("id", id)
-                .request().put(Entity.entity(recipe, MediaType.APPLICATION_JSON));
+        return ClientBuilder
+                .newClient()
+                .target(REST_TARGET_URL)
+                .path("/{id}")
+                .resolveTemplate("id", id)
+                .request()
+                .put(Entity.entity(recipe, MediaType.APPLICATION_JSON));
     }
 
     public Response deleteTest(long id) {
-        return ClientBuilder.newClient()
-                .target(REST_TARGET_URL).path("/{id}").resolveTemplate("id", id)
-                .request().delete();
+        return ClientBuilder
+                .newClient()
+                .target(REST_TARGET_URL)
+                .path("/{id}")
+                .resolveTemplate("id", id)
+                .request()
+                .delete();
+    }
+
+    public List<Recipe> searchTest(String parameter, String value) {
+        return ClientBuilder
+                .newClient()
+                .target(REST_TARGET_URL)
+                .path("/search")
+                .queryParam(parameter, value)
+                .request()
+                .get(new GenericType<>() {});
     }
 }
