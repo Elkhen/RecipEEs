@@ -30,7 +30,7 @@ public class Recipe {
     @SequenceGenerator(name = "recipe_generator", sequenceName = "recipe_seq", allocationSize = 1)
     @JsonIgnore
     @EqualsAndHashCode.Exclude
-    private Long id;
+    private long id;
 
     @NotBlank
     private String name;

@@ -110,7 +110,7 @@ public class RecipeRestClientTest
     }
 
     @Test
-    public void searchTest() {
+    public void searchTests() {
         for (Recipe recipe: RECIPES) {
             addTest(recipe);
         }
