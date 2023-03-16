@@ -127,16 +127,6 @@
       <version>2.14.1</version>
     </dependency>
 
-
-    <!-- LOMBOK -->
-
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.18.26</version>
-      <scope>provided</scope>
-    </dependency>
-
     <!-- TESTING -->
 
     <dependency>

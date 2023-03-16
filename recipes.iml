@@ -27,7 +27,6 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.14.1" level="project" />
     <orderEntry type="library" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:4.0.0" level="project" />
     <orderEntry type="library" name="Maven: jakarta.activation:jakarta.activation-api:2.1.1.jbossorg-1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.26" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: io.rest-assured:rest-assured:5.3.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apache.groovy:groovy:4.0.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apache.groovy:groovy-xml:4.0.6" level="project" />
