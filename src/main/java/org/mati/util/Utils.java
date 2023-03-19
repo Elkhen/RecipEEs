@@ -6,11 +6,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 
-public class Resources {
+public class Utils {
 
     @PersistenceContext
     private EntityManager em;
-
 
     @Produces
     public EntityManager getEntityManager() {

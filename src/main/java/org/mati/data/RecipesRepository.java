@@ -13,11 +13,6 @@ import java.util.List;
 @ApplicationScoped
 @Transactional
 public class RecipesRepository {
-    enum Action {
-        UPDATE,
-        DELETE,
-        GET
-    }
     @Inject
     private EntityManager em;
 
@@ -26,16 +21,14 @@ public class RecipesRepository {
         return recipe.getId();
     }
 
-    public Response getRecipeById(long id) {
-        return processRecipe(Action.GET, null, id, 404, 200);
+    public void deleteRecipe(long id) {
+        Recipe recipe = findRecipeById(id);
+        em.remove(recipe);
     }
 
-    public Response deleteRecipe(long id) {
-        return processRecipe(Action.DELETE, null, id, 404, 204);
-    }
-
-    public Response updateRecipe(Recipe updatedRecipe, long id) {
-        return processRecipe(Action.UPDATE, updatedRecipe, id, 404, 204);
+    public void updateRecipe(Recipe updatedRecipe, long id) {
+        updatedRecipe.setId(id);
+        em.merge(updatedRecipe);
     }
 
     public Recipe findRecipeById(long id) {
@@ -44,25 +37,6 @@ public class RecipesRepository {
             throw new IllegalArgumentException();
         }
         return recipe;
-    }
-
-    public Response processRecipe(Action action, Recipe receivedRecipe, long id, int errorStatus, int successStatus) {
-        try {
-            Recipe persistedRecipe = findRecipeById(id);
-            switch (action) {
-                case GET:
-                    return Response.ok(persistedRecipe).build();
-                case DELETE:
-                    em.remove(persistedRecipe);
-                    break;
-                case UPDATE:
-                    receivedRecipe.setId(id);
-                    em.merge(receivedRecipe);
-            }
-        } catch (IllegalArgumentException exception) {
-            return Response.status(errorStatus).build();
-        }
-        return Response.status(successStatus).build();
     }
 
     public Response search(String name, String category) {

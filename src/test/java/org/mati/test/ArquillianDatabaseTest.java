@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mati.data.RecipesRepository;
 import org.mati.model.Recipe;
-import org.mati.util.Resources;
+import org.mati.util.Utils;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +24,7 @@ public class ArquillianDatabaseTest {
     @Deployment
     public static Archive<?> createTestArchive() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
-                .addClasses(Recipe.class, RecipesRepository.class, Resources.class)
+                .addClasses(Recipe.class, RecipesRepository.class, Utils.class)
                 .addPackages(true, "org.apache.log4j")
                 .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
                 .addAsResource("log4j.properties")

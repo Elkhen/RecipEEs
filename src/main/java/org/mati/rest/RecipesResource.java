@@ -13,11 +13,9 @@ import org.apache.log4j.Logger;
 import org.mati.data.RecipesRepository;
 import org.mati.model.Recipe;
 
-import java.net.URI;
-
 @Path("/recipe")
 @RequestScoped
-public class RecipesController {
+public class RecipesResource {
 
 
     @Context
@@ -42,20 +40,37 @@ public class RecipesController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRecipeById(@PathParam("id") int id) {
-        return recipesRepository.getRecipeById(id);
+        Recipe recipe;
+
+        try {
+            recipe = recipesRepository.findRecipeById(id);
+        } catch (IllegalArgumentException exception) {
+            return Response.status(404).build();
+        }
+        return Response.ok(recipe).build();
     }
 
     @DELETE
     @Path("/{id}")
     public Response deleteRecipe(@PathParam("id") int id) {
-        return recipesRepository.deleteRecipe(id);
+        try {
+            recipesRepository.deleteRecipe(id);
+        } catch (IllegalArgumentException exception) {
+            return Response.status(404).build();
+        }
+        return Response.status(204).build();
     }
 
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateRecipe(@Valid Recipe recipe, @PathParam("id") int id) {
-        return recipesRepository.updateRecipe(recipe, id);
+        try {
+            recipesRepository.updateRecipe(recipe, id);
+        } catch (IllegalArgumentException exception) {
+            return Response.status(404).build();
+        }
+        return Response.status(204).build();
     }
 
     @GET
@@ -67,5 +82,10 @@ public class RecipesController {
         } else {
             return recipesRepository.search(name, category);
         }
+    }
+
+    @Path("/{id}")
+    public RecipeInfoResource getRecipeInfo(@PathParam("id") int id) {
+        return new RecipeInfoResource(recipesRepository.findRecipeById(id));
     }
 }
