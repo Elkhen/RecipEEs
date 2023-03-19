@@ -10,7 +10,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import org.apache.log4j.Logger;
-import org.mati.data.RecipesRepository;
+import org.mati.data.RecipesDAO;
 import org.mati.model.Recipe;
 
 @Path("/recipe")
@@ -25,14 +25,14 @@ public class RecipesResource {
     @Inject
     private Logger logger;
     @Inject
-    private RecipesRepository recipesRepository;
+    private RecipesDAO recipesDAO;
 
     @POST
     @Path("/new")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addRecipe(@Valid Recipe recipe) {
-        long idOfSavedRecipe = recipesRepository.addRecipe(recipe);
+        long idOfSavedRecipe = recipesDAO.addRecipe(recipe);
         return Response.status(201).header("Location", uriInfo.getBaseUri() + "recipe/" + idOfSavedRecipe).build();
     }
 
@@ -43,7 +43,7 @@ public class RecipesResource {
         Recipe recipe;
 
         try {
-            recipe = recipesRepository.findRecipeById(id);
+            recipe = recipesDAO.findRecipeById(id);
         } catch (IllegalArgumentException exception) {
             return Response.status(404).build();
         }
@@ -54,7 +54,7 @@ public class RecipesResource {
     @Path("/{id}")
     public Response deleteRecipe(@PathParam("id") int id) {
         try {
-            recipesRepository.deleteRecipe(id);
+            recipesDAO.deleteRecipe(id);
         } catch (IllegalArgumentException exception) {
             return Response.status(404).build();
         }
@@ -66,7 +66,7 @@ public class RecipesResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateRecipe(@Valid Recipe recipe, @PathParam("id") int id) {
         try {
-            recipesRepository.updateRecipe(recipe, id);
+            recipesDAO.updateRecipe(recipe, id);
         } catch (IllegalArgumentException exception) {
             return Response.status(404).build();
         }
@@ -80,12 +80,12 @@ public class RecipesResource {
         if ((name == null) == (category == null)) {
             return Response.status(400).build();
         } else {
-            return recipesRepository.search(name, category);
+            return recipesDAO.search(name, category);
         }
     }
 
     @Path("/{id}")
     public RecipeInfoResource getRecipeInfo(@PathParam("id") int id) {
-        return new RecipeInfoResource(recipesRepository.findRecipeById(id));
+        return new RecipeInfoResource(recipesDAO.findRecipeById(id));
     }
 }

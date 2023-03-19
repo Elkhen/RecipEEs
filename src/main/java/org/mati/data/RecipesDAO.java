@@ -1,7 +1,7 @@
 package org.mati.data;
 
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -10,9 +10,9 @@ import org.mati.model.Recipe;
 
 import java.util.List;
 
-@ApplicationScoped
+@RequestScoped
 @Transactional
-public class RecipesRepository {
+public class RecipesDAO {
     @Inject
     private EntityManager em;
 

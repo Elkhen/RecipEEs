@@ -12,7 +12,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mati.data.RecipesRepository;
+import org.mati.data.RecipesDAO;
 import org.mati.model.Recipe;
 import org.mati.util.Utils;
 
@@ -24,7 +24,7 @@ public class ArquillianDatabaseTest {
     @Deployment
     public static Archive<?> createTestArchive() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
-                .addClasses(Recipe.class, RecipesRepository.class, Utils.class)
+                .addClasses(Recipe.class, RecipesDAO.class, Utils.class)
                 .addPackages(true, "org.apache.log4j")
                 .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
                 .addAsResource("log4j.properties")
@@ -33,7 +33,7 @@ public class ArquillianDatabaseTest {
     }
 
     @Inject
-    RecipesRepository recipesRepository;
+    RecipesDAO recipesDAO;
 
     @Inject
     Logger logger;
@@ -54,14 +54,14 @@ public class ArquillianDatabaseTest {
 
 
 
-        recipesRepository.addRecipe(recipe);
+        recipesDAO.addRecipe(recipe);
 
         assertNotNull(recipe.getId());
 
         logger.info("Recipe for " + recipe.getName() + " persisted with id " + recipe.getId());
 
 
-        Recipe fetchedRecipe = recipesRepository.findRecipeById(recipe.getId());
+        Recipe fetchedRecipe = recipesDAO.findRecipeById(recipe.getId());
 
         assertEquals(recipe, fetchedRecipe);
 
