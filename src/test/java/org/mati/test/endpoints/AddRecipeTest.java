@@ -1,8 +1,6 @@
 package org.mati.test.endpoints;
 
 import static io.restassured.RestAssured.*;
-import static io.restassured.matcher.RestAssuredMatchers.*;
-import static org.hamcrest.Matchers.*;
 
 import io.restassured.http.ContentType;
 import org.junit.Before;
@@ -47,8 +45,7 @@ public class AddRecipeTest {
         when().
                 post("/new").
         then()
-                .statusCode(200)
-                .body(containsString("id"));
+                .statusCode(201);
     }
 
     @Test

@@ -9,7 +9,6 @@ import jakarta.ws.rs.core.Response;
 import org.mati.model.Recipe;
 
 import java.util.List;
-import java.util.Map;
 
 @ApplicationScoped
 @Transactional
@@ -22,9 +21,9 @@ public class RecipesRepository {
     @Inject
     private EntityManager em;
 
-    public Response addRecipe(Recipe recipe) {
+    public long addRecipe(Recipe recipe) {
         em.persist(recipe);
-        return Response.ok(Map.of("id", recipe.getId())).build();
+        return recipe.getId();
     }
 
     public Response getRecipeById(long id) {

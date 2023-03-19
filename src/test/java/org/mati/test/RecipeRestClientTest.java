@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.mati.model.Recipe;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.List;
@@ -75,36 +76,36 @@ public class RecipeRestClientTest
         logger.info("Adding the recipe.");
 
         Response correctRecipeResponse = addTest(RECIPES[0]);
-        assertEquals(200, correctRecipeResponse.getStatus());
+        assertEquals(201, correctRecipeResponse.getStatus());
 
         Response incorrectRecipeResponse = addTest(INCORRECT_RECIPES[0]);
         assertEquals(400, incorrectRecipeResponse.getStatus());
 
-        int idOfPostedRecipe = (int) correctRecipeResponse.readEntity(Map.class).get("id");
+        String recipeURI = correctRecipeResponse.getHeaderString("Location");
 
 
         logger.info("Getting the recipe.");
 
-        Recipe fetchedRecipe = getTest(idOfPostedRecipe);
+        Recipe fetchedRecipe = getTest(recipeURI);
         assertEquals(RECIPES[0], fetchedRecipe);
 
 
         logger.info("Updating the recipe.");
 
         RECIPES[0].setName("NotSoFresh Mint Tea");
-        Response updateResponse =  updateTest(RECIPES[0], idOfPostedRecipe);
+        Response updateResponse =  updateTest(RECIPES[0], recipeURI);
         assertEquals(204, updateResponse.getStatus());
 
-        Recipe fetchedRecipeAfterUpdate = getTest(idOfPostedRecipe);
+        Recipe fetchedRecipeAfterUpdate = getTest(recipeURI);
         assertEquals(RECIPES[0], fetchedRecipeAfterUpdate);
 
 
         logger.info("Deleting the recipe.");
 
-        Response deleteResponse = deleteTest(idOfPostedRecipe);
+        Response deleteResponse = deleteTest(recipeURI);
         assertEquals(204, deleteResponse.getStatus());
 
-        Response deleteNotFoundResponse = deleteTest(idOfPostedRecipe);
+        Response deleteNotFoundResponse = deleteTest(recipeURI);
         assertEquals(404, deleteNotFoundResponse.getStatus());
 
     }
@@ -130,32 +131,26 @@ public class RecipeRestClientTest
 
     }
 
-    public Recipe getTest(long id) {
+    public Recipe getTest(String target) {
         return ClientBuilder
                 .newClient()
-                .target(REST_TARGET_URL)
-                .path("/{id}")
-                .resolveTemplate("id", id)
+                .target(target)
                 .request()
                 .get(Recipe.class);
     }
 
-    public Response updateTest(Recipe recipe, long id) {
+    public Response updateTest(Recipe recipe, String target) {
         return ClientBuilder
                 .newClient()
-                .target(REST_TARGET_URL)
-                .path("/{id}")
-                .resolveTemplate("id", id)
+                .target(target)
                 .request()
                 .put(Entity.entity(recipe, MediaType.APPLICATION_JSON));
     }
 
-    public Response deleteTest(long id) {
+    public Response deleteTest(String target) {
         return ClientBuilder
                 .newClient()
-                .target(REST_TARGET_URL)
-                .path("/{id}")
-                .resolveTemplate("id", id)
+                .target(target)
                 .request()
                 .delete();
     }

@@ -25,24 +25,23 @@ public class GetRecipeTest {
                     "Mix and let the mint leaves seep for 3-5 minutes",
                     "Add honey and mix again"});
 
-    int recipeId;
+    String recipeURI;
 
     @Before
     public void beforeClass() {
-        baseURI = "http://localhost:8080/recipes/api/recipe";
         Response response =
                 given().
                         contentType(ContentType.JSON).
                         body(recipe).
-                post("/new");
-        recipeId = (int) response.getBody().as(Map.class).get("id");
+                post("http://localhost:8080/recipes/api/recipe/new");
+        recipeURI = response.getHeader("Location");
     }
 
     @Test
     public void getRecipe_shouldReturn_200() {
         Recipe extractedRecipe =
         when().
-                get("/" + recipeId).
+                get(recipeURI).
         then().
                 statusCode(200).
         extract().
@@ -54,10 +53,10 @@ public class GetRecipeTest {
 
     @Test
     public void getRecipe_shouldReturn404() {
-        delete("/" + recipeId);
+        delete(recipeURI);
 
         when().
-                get("/" + recipeId).
+                get(recipeURI).
         then().
                 statusCode(404);
     }

@@ -5,16 +5,23 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 import org.apache.log4j.Logger;
 import org.mati.data.RecipesRepository;
 import org.mati.model.Recipe;
+
+import java.net.URI;
 
 @Path("/recipe")
 @RequestScoped
 public class RecipesController {
 
+
+    @Context
+    private UriInfo uriInfo;
     @Inject
     private EntityManager em;
     @Inject
@@ -27,7 +34,8 @@ public class RecipesController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addRecipe(@Valid Recipe recipe) {
-        return recipesRepository.addRecipe(recipe);
+        long idOfSavedRecipe = recipesRepository.addRecipe(recipe);
+        return Response.status(201).header("Location", uriInfo.getBaseUri() + "recipe/" + idOfSavedRecipe).build();
     }
 
     @GET
