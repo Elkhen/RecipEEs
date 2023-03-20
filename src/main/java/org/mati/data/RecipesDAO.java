@@ -5,6 +5,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 import org.mati.model.Recipe;
 
@@ -34,7 +35,7 @@ public class RecipesDAO {
     public Recipe findRecipeById(long id) {
         Recipe recipe = em.find(Recipe.class, id);
         if (recipe == null) {
-            throw new IllegalArgumentException();
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         return recipe;
     }

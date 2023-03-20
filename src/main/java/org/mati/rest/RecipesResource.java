@@ -40,37 +40,20 @@ public class RecipesResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRecipeById(@PathParam("id") int id) {
-        Recipe recipe;
-
-        try {
-            recipe = recipesDAO.findRecipeById(id);
-        } catch (IllegalArgumentException exception) {
-            return Response.status(404).build();
-        }
-        return Response.ok(recipe).build();
+        return Response.ok(recipesDAO.findRecipeById(id)).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public Response deleteRecipe(@PathParam("id") int id) {
-        try {
-            recipesDAO.deleteRecipe(id);
-        } catch (IllegalArgumentException exception) {
-            return Response.status(404).build();
-        }
-        return Response.status(204).build();
+    public void deleteRecipe(@PathParam("id") int id) {
+        recipesDAO.deleteRecipe(id);
     }
 
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateRecipe(@Valid Recipe recipe, @PathParam("id") int id) {
-        try {
-            recipesDAO.updateRecipe(recipe, id);
-        } catch (IllegalArgumentException exception) {
-            return Response.status(404).build();
-        }
-        return Response.status(204).build();
+    public void updateRecipe(@Valid Recipe recipe, @PathParam("id") int id) {
+        recipesDAO.updateRecipe(recipe, id);
     }
 
     @GET
